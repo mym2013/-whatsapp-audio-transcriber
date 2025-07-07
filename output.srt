@@ -1,0 +1,24 @@
+1
+00:00:00,000 --> 00:00:05,440
+Disabled skills and attributes experienced with additional back-end frameworks on languages such
+
+2
+00:00:05,440 --> 00:00:13,040
+as Node.js with express or similar will be considered applause. Knowledge of containerization
+
+3
+00:00:13,040 --> 00:00:24,000
+technologies like docker ci cd pipelines and co-platforms aws ashore or cgzp is highly disabled.
+
+4
+00:00:24,000 --> 00:00:31,200
+Familiarity with full-time statement management libraries such as Redux or MervX and testing frameworks
+
+5
+00:00:31,200 --> 00:00:37,760
+like Jest or Cypress will enhance the candidate's profile. Self-skills such as adaptability,
+
+6
+00:00:37,760 --> 00:00:45,200
+strong interpersonal communication, self-motivation and a continuous learning approach will help excel in this role.
+
