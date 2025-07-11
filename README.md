@@ -1,96 +1,108 @@
-🎯 Workflow Document: Converting and Transcribing WhatsApp Audio with FFmpeg and Whisper
-Date Completed:
-(add your date here)
-________________________________________
-✅ 1. Convert WhatsApp OPUS Audio to WAV
-Tools Used:
-•	FFmpeg (already installed on system)
-Steps:
-1.	Created a clean folder:
-makefile
-CopiarEditar
-C:\Users\torre\OneDrive\Escritorio\wassap noice
-2.	Placed input.opus in that folder.
-3.	Created convert.js with this content:
-javascript
-CopiarEditar
-const { spawn } = require('child_process');
-const inputFile = 'input.opus';
-const outputFile = 'output.wav';
+# 📄 WhatsApp Audio Transcriber
 
-const ffmpeg = spawn('ffmpeg', [
-  '-i', inputFile,
-  outputFile
-]);
+## 🎯 Descripción
 
-ffmpeg.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`);
-});
+Este proyecto es una aplicación web que permite:
 
-ffmpeg.stderr.on('data', (data) => {
-  console.error(`stderr: ${data}`);
-});
+- Subir archivos de audio `.opus` (formato común en WhatsApp)
+- Convertirlos a `.wav` (o `.mp3`, futuro)
+- Descargar el archivo convertido
+- (Próximamente) Transcribir el audio usando Vosk
 
-ffmpeg.on('close', (code) => {
-  if (code === 0) {
-    console.log(`Conversion complete! File saved as ${outputFile}`);
-  } else {
-    console.error(`FFmpeg exited with code ${code}`);
-  }
-});
-4.	Ran the conversion command:
-nginx
-CopiarEditar
-node convert.js
-5.	Confirmed output.wav was created successfully.
-________________________________________
-✅ 2. Install Whisper Transcription Tool
-Tools Used:
-•	Python 3.13
-•	pip
-Steps:
-1.	Installed Whisper:
-nginx
-CopiarEditar
-pip install openai-whisper
-2.	Confirmed all dependencies installed:
-o	torch
-o	tiktoken
-o	numba
-o	numpy
-o	etc.
-________________________________________
-✅ 3. Transcribe the WAV Audio
-Steps:
-1.	In terminal, ran:
-lua
-CopiarEditar
-whisper output.wav --language English
-2.	Waited while Whisper:
-o	Downloaded the model (~1.5 GB)
-o	Processed the audio
-3.	Verified:
-o	Transcription printed in terminal
-o	File output.txt created in the same folder
-________________________________________
-📂 Resulting Files
-•	output.wav: Converted audio
-•	output.txt: Transcript
-________________________________________
-✅ Notes:
-•	If the audio is in Spanish or another language, use:
-lua
-CopiarEditar
-whisper output.wav --language Spanish
-•	You can change the model to a smaller one (faster) with:
-css
-CopiarEditar
---model tiny
-________________________________________
-🎁 Next Steps (Optional)
-•	Summarize or translate the transcript
-•	Build into larger automation
-•	Use other audio files (WhatsApp or other formats)
-________________________________________
-✅ Done.
+Todo el flujo funciona localmente con Node.js y FFmpeg, sin necesidad de servicios en la nube.
 
+## ⚙️ Tecnologías utilizadas
+
+- **Node.js** + **Express**: servidor backend
+- **Multer**: subida de archivos
+- **FFmpeg**: conversión de audio
+- **HTML + JS puro**: frontend sin frameworks
+- **Vosk** (próximo): transcripción offline
+- **Git** y **GitHub**: control de versiones
+
+## 📁 Estructura del proyecto
+
+wassap noice/
+├── backend/
+│ └── index.js
+│ └── package.json
+├── frontend/
+│ └── index.html
+├── uploads/ ← Archivos subidos temporalmente
+├── converted/ ← Archivos convertidos listos para descarga
+├── .gitignore
+├── README.md
+└── 🎯 Workflow Document conver opus-wav.docx
+
+bash
+Copiar
+Editar
+```)
+## 🚀 Instrucciones para correr el proyecto
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/mym2013/-whatsapp-audio-transcriber.git
+cd whatsapp-audio-transcriber
+git checkout dev
+2. Instalar dependencias del backend
+cd backend
+npm install
+3. Ejecutar el backend
+bash
+Copiar
+Editar
+node index.js
+# Servidor en http://localhost:4000
+4. Instalar servidor web para el frontend (una sola vez)
+bash
+Copiar
+Editar
+npm install -g serve
+5. Servir el frontend
+bash
+Copiar
+Editar
+cd ../frontend
+serve
+# Normalmente disponible en http://localhost:3000
+🧪 Cómo usar la app
+Abrir http://localhost:3000 en el navegador.
+
+Seleccionar un archivo .opus desde tu equipo.
+
+Hacer clic en Convertir.
+
+Descargar el archivo .wav convertido automáticamente.
+
+📌 Notas adicionales
+Si serve usa el mismo puerto que el backend, cambia el puerto del backend (index.js) a 4000 y ajustá el fetch() en index.html.
+
+El backend y el frontend funcionan en local de forma independiente, conectados por HTTP.
+
+Los archivos convertidos se guardan en la carpeta /converted hasta ser descargados.
+
+Los archivos subidos van a la carpeta /uploads de forma temporal.
+
+📚 Próximos pasos
+Agregar transcripción automática offline con Vosk (Python)
+
+Opción para convertir también a .mp3
+
+Interfaz web con barra de progreso y mejora visual (CSS)
+
+Página de historial de archivos convertidos
+
+yaml
+Copiar
+Editar
+
+---
+
+📌 Cuando termines de pegarlo y guardar el archivo, hacé:
+
+```bash
+git add README.md
+git commit -m "README completo corregido y documentado"
+git push
