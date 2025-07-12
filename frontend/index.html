@@ -1,42 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Conversor de Audio OPUS a WAV</title>
 </head>
 <body>
   <h1>Subir archivo .opus</h1>
-  <form id="uploadForm" enctype="multipart/form-data">
-    <input type="file" name="audio" accept=".opus" required>
+
+  <form id="uploadForm">
+    <input type="file" name="audio" accept=".opus" required />
     <button type="submit">Convertir</button>
   </form>
+
   <p id="status"></p>
+
   <script>
     const form = document.getElementById('uploadForm');
     const status = document.getElementById('status');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const formData = new FormData(form);
       status.textContent = 'Subiendo y convirtiendo...';
 
-      const formData = new FormData(form);
-      const response = await fetch('http://localhost:3000/upload', {
-        method: 'POST',
-        body: formData
-      });
+      try {
+        const response = await fetch('http://localhost:4000/upload', {
+          method: 'POST',
+          body: formData
+        });
 
-      if (response.ok) {
+        if (!response.ok) throw new Error('Error en el servidor');
+
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'convertido.wav';
+        a.download = 'archivo_convertido.wav';
+        document.body.appendChild(a);
         a.click();
-        status.textContent = '≠Conversi¢n completada!';
-      } else {
-        status.textContent = 'Error al convertir el archivo.';
+        a.remove();
+
+        status.textContent = 'Conversi√≥n completada.';
+      } catch (error) {
+        console.error('Error:', error);
+        status.textContent = 'Hubo un error durante la conversi√≥n.';
       }
     });
   </script>
 </body>
 </html>
+
